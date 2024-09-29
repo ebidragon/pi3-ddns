@@ -4,6 +4,11 @@
 ```bash
 git clone https://github.com/ebidragon/pi3-ddns.git
 ```
+### update
+```bash
+cd pi3-ddns
+git pull
+```
 
 ## Configuration
 ### .env
