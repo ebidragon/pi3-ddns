@@ -76,9 +76,9 @@ if [ -z "${OLDIP}" ]; then
       break
     fi
   done
-  OLDIP_RETRY="(${COUNT})"
+  OLDIP_RETRY="(retry:${COUNT})"
 fi
-CONTENT="NewIP: ${NEWIP}${NEWIP_RETRY}${CODETXT}\nOldIP: ${OLDIP}${OLDIP_RETRY}"
+CONTENT="NewIP: ${NEWIP}${CODETXT}\nOldIP: ${OLDIP}${OLDIP_RETRY}"
 if [ -n "${EXPIRES_NUM}" ]; then
   EXPIRES_UNIXTIME=`date -d "${EXPIRES_NUM:0:8} ${EXPIRES_NUM:8:2}:${EXPIRES_NUM:10:2}:${EXPIRES_NUM:12:2}" '+%s'`
   CURRENT_UNIXTIME=`date -d "${CURRENT_NUM:0:8} ${CURRENT_NUM:8:2}:${CURRENT_NUM:10:2}:${CURRENT_NUM:12:2}" '+%s'`
@@ -123,8 +123,7 @@ else
     CONTENT="${CONTENT}\nDDNS: Failed."
   fi
 fi
-#TODO NEWIP_RETRY&OLDIP_RETRY DELETE
-if [ "${NEWIP}" != "${OLDIP}" ] || [ "${1}" = "boot" ] || [ -n "${NEWIP_RETRY}" ] || [ -n "${OLDIP_RETRY}" ]; then
+if [ "${NEWIP}" != "${OLDIP}" ] || [ "${1}" = "boot" ]; then
   curl --request POST \
     --url 'https://api.sendgrid.com/v3/mail/send' \
     --header 'Authorization: Bearer '"${MAIL_API_KEY}" \
